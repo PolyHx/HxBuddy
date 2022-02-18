@@ -1,0 +1,22 @@
+{
+  "name": "hxbuddy",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "ci:test": "lerna run ci:test",
+    "dev": "lerna run dev --stream",
+    "dev:ios": "lerna run dev:ios --stream",
+    "dev:and": "lerna run dev:and --stream",
+    "new-version": "lerna version --conventional-commits --yes",
+    "diff": "lerna diff",
+    "ci:deploy": "lerna run ci:deploy"
+  },
+  "version": "0.0.0",
+  "author": "WopusLabs",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
