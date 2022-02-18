@@ -4,8 +4,8 @@
   "main": "__generated__/AppEntry.js",
   "scripts": {
     "dev": "expo start",
-    "dev:ios": "expo start --android",
-    "dev:and": "expo start --ios",
+    "dev:and": "expo start --android",
+    "dev:ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
