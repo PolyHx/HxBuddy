@@ -1,3 +1,5 @@
+use rocket::routes;
+
 #[macro_use]
 extern crate rocket;
 

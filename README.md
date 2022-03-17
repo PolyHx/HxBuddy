@@ -6,7 +6,9 @@ Le passeport vaccinal pour les hackathons
 
 ### App
 
-> Todo
+- Install expo cli
+- Run using `yarn dev`
+- Run both the server and the app using `./run.sh dev`
 
 ### Server
 
