@@ -45,10 +45,7 @@ async fn register(conn: &State<Client>, user: Json<User>) -> Json<String> {
 }
 
 async fn init_db_client() -> mongodb::error::Result<Client> {
-    let client_options = ClientOptions::parse(
-        "mongodb+srv://...",
-    )
-    .await?;
+    let client_options = ClientOptions::parse("mongodb+srv://...").await?;
     Client::with_options(client_options)
 }
 
@@ -59,4 +56,35 @@ async fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![login, register])
         .manage(client)
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::user::User;
+
+    use super::rocket;
+    use rocket::http::{ContentType, Status};
+    use rocket::local::blocking::Client;
+
+    #[test]
+    fn test_register() {
+        let client = Client::tracked(rocket()).expect("valid rocket instance");
+        let req = client.post("/register");
+
+        let user = User::new("Bob".to_string(), "1234".to_string());
+        let req = req.json(&user);
+
+        let response = req.dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        assert_eq!(response.content_type(), Some(ContentType::JSON));
+        assert_eq!(
+            response
+                .into_string()
+                .unwrap()
+                .chars()
+                .filter(|&c| c == '.')
+                .count(),
+            2
+        );
+    }
 }
