@@ -1,35 +1,62 @@
 #[macro_use]
 extern crate rocket;
 
-use rocket::routes;
+use mongodb::{bson::doc, options::ClientOptions, Client};
 use rocket::serde::json::Json;
+use rocket::{routes, State};
 
 mod auth;
-use auth::Claims;
+use auth::{create_jwt, Claims};
 mod user;
 use user::User;
 
-use crate::auth::create_jwt;
-
 #[post("/login", data = "<user>")]
-async fn login(user: Json<User>) -> Json<User> {
+async fn login(conn: &State<Client>, user: Json<User>) -> Json<String> {
     println!("{:#?}", user);
-    // user.login();
-    // Returns the user for now, but will return a JWT
-    // user.new_jtw()
-    user
+
+    let db = conn.database("users");
+    let collection = db.collection::<User>("users");
+    let filter = doc! { "username": user.get_username() };
+    let user2 = collection.find_one(filter, None).await.unwrap().unwrap();
+
+    create_jwt(
+        user2.get_id().unwrap().to_string(),
+        user.get_username().to_string(),
+    )
+    .unwrap()
+    .into()
 }
 
 #[post("/register", data = "<user>")]
-async fn register(user: Json<User>) -> Json<String> {
+async fn register(conn: &State<Client>, user: Json<User>) -> Json<String> {
     println!("{:#?}", user);
     user.register();
-    // Returns the user for now, but will return a JWT
-    // user.new_jtw()
-    create_jwt(user.get_username()).unwrap().into()
+
+    let db = conn.database("users");
+    let collection = db.collection::<User>("users");
+    let insert_result = collection.insert_one(user.0.clone(), None).await.unwrap();
+
+    create_jwt(
+        insert_result.inserted_id.to_string(),
+        user.get_username().to_string(),
+    )
+    .unwrap()
+    .into()
+}
+
+async fn init_db_client() -> mongodb::error::Result<Client> {
+    let client_options = ClientOptions::parse(
+        "mongodb+srv://...",
+    )
+    .await?;
+    Client::with_options(client_options)
 }
 
 #[launch]
-fn rocket() -> _ {
-    rocket::build().mount("/", routes![login, register])
+async fn rocket() -> _ {
+    let client = init_db_client().await.unwrap();
+
+    rocket::build()
+        .mount("/", routes![login, register])
+        .manage(client)
 }

@@ -38,13 +38,13 @@ async fn authorize(headers: HeaderMap<HeaderValue>) -> Result<String> {
     Ok(decoded.claims.sub)
 }
 
-pub fn create_jwt(uid: &str) -> Result<String> {
+pub fn create_jwt(uid: String, username: String) -> Result<String> {
     let claims = Claims {
         iss: "".to_string(),
-        sub: uid.to_owned(),
+        sub: uid,
         exp: 0,
         iat: 0,
-        name: uid.to_owned(),
+        name: username,
     };
     let header = Header::new(Algorithm::HS512);
     let s = encode(&header, &claims, &EncodingKey::from_secret(JWT_SECRET))?;
