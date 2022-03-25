@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate rocket;
 
+#[macro_use]
+extern crate dotenv_codegen;
+
 use mongodb::{bson::doc, options::ClientOptions, Client};
 use rocket::serde::json::Json;
 use rocket::{routes, State};
@@ -45,7 +48,7 @@ async fn register(conn: &State<Client>, user: Json<User>) -> Json<String> {
 }
 
 async fn init_db_client() -> mongodb::error::Result<Client> {
-    let client_options = ClientOptions::parse("mongodb+srv://...").await?;
+    let client_options = ClientOptions::parse(dotenv!("MONGO_URI")).await?;
     Client::with_options(client_options)
 }
 
