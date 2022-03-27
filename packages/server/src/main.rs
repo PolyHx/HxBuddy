@@ -13,7 +13,7 @@ use auth::{create_jwt, Claims};
 mod user;
 use user::User;
 
-#[post("/login", data = "<user>")]
+#[post("/api/v1/login", data = "<user>")]
 async fn login(conn: &State<Client>, user: Json<User>) -> Json<String> {
     println!("{:#?}", user);
 
@@ -30,7 +30,7 @@ async fn login(conn: &State<Client>, user: Json<User>) -> Json<String> {
     .into()
 }
 
-#[post("/register", data = "<user>")]
+#[post("/api/v1/register", data = "<user>")]
 async fn register(conn: &State<Client>, user: Json<User>) -> Json<String> {
     println!("{:#?}", user);
     user.register();
@@ -83,7 +83,7 @@ mod tests {
     #[rocket::async_test]
     async fn test_register() {
         let client = build_client().await;
-        let req = client.post("/register");
+        let req = client.post("/api/v1/register");
 
         let user = User::new("Bob".to_string(), "1234".to_string());
         let req = req.json(&user);
