@@ -65,24 +65,36 @@ async fn rocket() -> _ {
 mod tests {
     use crate::user::User;
 
-    use super::rocket;
+    use super::*;
     use rocket::http::{ContentType, Status};
-    use rocket::local::blocking::Client;
+    use rocket::local::asynchronous::Client;
 
-    #[test]
-    fn test_register() {
-        let client = Client::tracked(rocket()).expect("valid rocket instance");
+    async fn build_client() -> Client {
+        // TODO connect to a dummy test db
+        let client = init_db_client().await.unwrap();
+
+        let r = rocket::build()
+            .mount("/", routes![login, register])
+            .manage(client);
+
+        Client::tracked(r).await.expect("valid rocket instance")
+    }
+
+    #[rocket::async_test]
+    async fn test_register() {
+        let client = build_client().await;
         let req = client.post("/register");
 
         let user = User::new("Bob".to_string(), "1234".to_string());
         let req = req.json(&user);
 
-        let response = req.dispatch();
+        let response = req.dispatch().await;
         assert_eq!(response.status(), Status::Ok);
         assert_eq!(response.content_type(), Some(ContentType::JSON));
         assert_eq!(
             response
                 .into_string()
+                .await
                 .unwrap()
                 .chars()
                 .filter(|&c| c == '.')
