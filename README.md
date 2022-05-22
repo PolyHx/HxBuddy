@@ -4,9 +4,11 @@ Le passeport vaccinal pour les hackathons
 
 ## Installation
 
+- Create a .env file at the root and add `MONGO_URI=<YOUR_MONGO_URI>` in it
+
 ### App
 
-- Install expo cli
+- Install the dependencies in packages/app by running `yarn install`
 - Run using `yarn dev`
 - Run both the server and the app using `./run.sh dev`
 
