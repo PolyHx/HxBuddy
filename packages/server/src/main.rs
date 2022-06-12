@@ -4,48 +4,12 @@ extern crate rocket;
 #[macro_use]
 extern crate dotenv_codegen;
 
-use mongodb::{bson::doc, options::ClientOptions, Client};
-use rocket::serde::json::Json;
-use rocket::{routes, State};
-
 mod auth;
-use auth::{create_jwt, Claims};
+mod routes;
 mod user;
-use user::User;
 
-#[post("/api/v1/login", data = "<user>")]
-async fn login(conn: &State<Client>, user: Json<User>) -> Json<String> {
-    println!("{:#?}", user);
-
-    let db = conn.database("users");
-    let collection = db.collection::<User>("users");
-    let filter = doc! { "username": user.get_username() };
-    let user2 = collection.find_one(filter, None).await.unwrap().unwrap();
-
-    create_jwt(
-        user2.get_id().unwrap().to_string(),
-        user.get_username().to_string(),
-    )
-    .unwrap()
-    .into()
-}
-
-#[post("/api/v1/register", data = "<user>")]
-async fn register(conn: &State<Client>, user: Json<User>) -> Json<String> {
-    println!("{:#?}", user);
-    user.register();
-
-    let db = conn.database("users");
-    let collection = db.collection::<User>("users");
-    let insert_result = collection.insert_one(user.0.clone(), None).await.unwrap();
-
-    create_jwt(
-        insert_result.inserted_id.to_string(),
-        user.get_username().to_string(),
-    )
-    .unwrap()
-    .into()
-}
+use mongodb::{options::ClientOptions, Client};
+use routes::{login::login, register::register};
 
 async fn init_db_client() -> mongodb::error::Result<Client> {
     let client_options = ClientOptions::parse(dotenv!("MONGO_URI")).await?;

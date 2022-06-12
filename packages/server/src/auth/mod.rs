@@ -1,7 +1,7 @@
 use anyhow::Result;
 use jsonwebtoken::{decode, encode, Algorithm, DecodingKey, EncodingKey, Header, Validation};
 use rocket::{
-    http::hyper::{header::AUTHORIZATION, HeaderMap, HeaderValue},
+    http::HeaderMap,
     serde::{Deserialize, Serialize},
 };
 use std::str;
@@ -18,8 +18,8 @@ pub struct Claims {
     name: String,
 }
 
-fn jwt_from_header(headers: &HeaderMap<HeaderValue>) -> Result<String> {
-    let header = headers.get(AUTHORIZATION).unwrap();
+fn jwt_from_header(headers: &HeaderMap) -> Result<String> {
+    let header = headers.get("Authorization").next().unwrap();
     let auth_header = str::from_utf8(header.as_bytes())?;
     if !auth_header.starts_with(BEARER) {
         // return Err(Error::InvalidAuthHeaderError);
@@ -27,16 +27,16 @@ fn jwt_from_header(headers: &HeaderMap<HeaderValue>) -> Result<String> {
     Ok(auth_header.trim_start_matches(BEARER).to_owned())
 }
 
-async fn authorize(headers: HeaderMap<HeaderValue>) -> Result<String> {
-    let jwt = jwt_from_header(&headers)?;
-    let decoded = decode::<Claims>(
-        &jwt,
-        &DecodingKey::from_secret(JWT_SECRET),
-        &Validation::new(Algorithm::HS512),
-    )?;
+// fn authorize(headers: HeaderMap) -> Result<String> {
+//     let jwt = jwt_from_header(&headers)?;
+//     let decoded = decode::<Claims>(
+//         &jwt,
+//         &DecodingKey::from_secret(JWT_SECRET),
+//         &Validation::new(Algorithm::HS512),
+//     )?;
 
-    Ok(decoded.claims.sub)
-}
+//     Ok(decoded.claims.sub)
+// }
 
 pub fn create_jwt(uid: String, username: String) -> Result<String> {
     let claims = Claims {
