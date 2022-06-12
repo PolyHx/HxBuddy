@@ -18,7 +18,9 @@ async fn init_db_client() -> mongodb::error::Result<Client> {
 
 #[launch]
 async fn rocket() -> _ {
-    let client = init_db_client().await.unwrap();
+    let client = init_db_client()
+        .await
+        .expect("Could not initialize the database client");
 
     rocket::build()
         .mount("/", routes![login, register])
