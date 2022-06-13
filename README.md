@@ -8,7 +8,7 @@ Le passeport vaccinal pour les hackathons
 
 ### App
 
-- Install the dependencies in packages/app by running `yarn install`
+- Install the dependencies in packages/web by running `yarn`
 - Run using `yarn dev`
 - Run both the server and the app using `./run.sh dev`
 
