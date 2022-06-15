@@ -6,19 +6,20 @@ extern crate dotenv_codegen;
 
 mod auth;
 mod routes;
+mod models;
 mod user;
 
 use mongodb::{options::ClientOptions, Client};
 use routes::{login::login, register::register};
 
-async fn init_db_client() -> mongodb::error::Result<Client> {
-    let client_options = ClientOptions::parse(dotenv!("MONGO_URI")).await?;
+async fn init_db_client(connection_string: &str) -> mongodb::error::Result<Client> {
+    let client_options = ClientOptions::parse(connection_string).await?;
     Client::with_options(client_options)
 }
 
 #[launch]
 async fn rocket() -> _ {
-    let client = init_db_client()
+    let client = init_db_client(dotenv!("MONGO_URI"))
         .await
         .expect("Could not initialize the database client");
 
@@ -29,7 +30,7 @@ async fn rocket() -> _ {
 
 #[cfg(test)]
 mod tests {
-    use crate::user::User;
+    use crate::user::UserLogin;
 
     use super::*;
     use rocket::http::{ContentType, Status};
@@ -37,7 +38,7 @@ mod tests {
 
     async fn build_client() -> Client {
         // TODO connect to a dummy test db
-        let client = init_db_client().await.unwrap();
+        let client = init_db_client(dotenv!("MONGO_URI")).await.unwrap();
 
         let r = rocket::build()
             .mount("/", routes![login, register])
@@ -51,7 +52,7 @@ mod tests {
         let client = build_client().await;
         let req = client.post("/api/v1/register");
 
-        let user = User::new("Bob".to_string(), "1234".to_string());
+        let user = UserLogin::new("Bob".to_string(), "1234".to_string());
         let req = req.json(&user);
 
         let response = req.dispatch().await;
