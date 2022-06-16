@@ -7,16 +7,15 @@ import {
   Typography,
 } from '@mui/material';
 import { Background } from '../components/Background';
+import { FormHeader } from './Register/FormHeader';
 import { RegisterForm } from './Register/RegisterForm';
 
 export const Register = () => {
   return (
     <Background>
       <Container>
-        <Paper sx={{ marginTop: 8 }}>
-          <Typography variant="h4" color={'white'} sx={{ padding: 2 }}>
-            Register
-          </Typography>
+        <Paper elevation={5} sx={{ marginTop: 8 }}>
+          <FormHeader />
           <Divider />
           <CardContent>
             <RegisterForm />
