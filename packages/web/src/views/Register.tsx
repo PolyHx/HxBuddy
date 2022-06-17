@@ -1,4 +1,5 @@
 import {
+  Card,
   CardContent,
   Container,
   Divider,
@@ -17,9 +18,11 @@ export const Register = () => {
         <Paper elevation={5} sx={{ marginTop: 8 }}>
           <FormHeader />
           <Divider />
-          <CardContent>
-            <RegisterForm />
-          </CardContent>
+          <Card>
+            <CardContent>
+              <RegisterForm />
+            </CardContent>
+          </Card>
         </Paper>
       </Container>
     </Background>
