@@ -8,7 +8,7 @@ RUN apk update \
     && rm -rf /var/cache/apk/* \
     # Create empty project
     && cargo new --bin app
-WORKDIR ./app
+WORKDIR /app
 
 # Cache cargo dependencies
 COPY ./packages/server/Cargo.toml ./Cargo.lock ./
@@ -29,6 +29,3 @@ COPY --from=builder \
     /usr/src/app/server
 
 ENV ROCKET_ADDRESS=0.0.0.0
-EXPOSE 8000
-
-CMD ["/usr/src/app/server"]

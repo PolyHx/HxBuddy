@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: hxbuddy-api
+    image: hxbuddy-api:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile.server
+    command: ./usr/src/app/server
+    ports:
+      - 8000:8000
+    volumes:
+      - /app
+    restart: unless-stopped
