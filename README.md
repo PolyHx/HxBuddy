@@ -19,5 +19,5 @@ Le passeport vaccinal pour les hackathons
 - Run the server with `./run.sh server`
 
 #### Build and run the server with Docker
-- `docker build -t hxbuddy-api -f ./packages/server/Dockerfile .`
-- `docker run --rm -p 9999:9999 hxbuddy-api`
+- `docker build -t hxbuddy-api -f Dockerfile.server .`
+- `docker run --rm -p 8000:8000 hxbuddy-api`
