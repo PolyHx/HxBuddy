@@ -17,3 +17,7 @@ Le passeport vaccinal pour les hackathons
 - Install rust & cargo
 - Install cargo watch with `$ cargo install cargo-watch`
 - Run the server with `./run.sh server`
+
+#### Build and run the server with Docker
+- `docker build -t hxbuddy-api -f ./packages/server/Dockerfile .`
+- `docker run --rm -p 9999:9999 hxbuddy-api`
