@@ -5,12 +5,15 @@ extern crate rocket;
 extern crate dotenv_codegen;
 
 mod auth;
-mod routes;
 mod models;
+mod routes;
 mod user;
 
 use mongodb::{options::ClientOptions, Client};
 use routes::{login::login, register::register};
+
+use rocket::http::Method;
+use rocket_cors::{AllowedOrigins, CorsOptions};
 
 async fn init_db_client(connection_string: &str) -> mongodb::error::Result<Client> {
     let client_options = ClientOptions::parse(connection_string).await?;
@@ -23,9 +26,20 @@ async fn rocket() -> _ {
         .await
         .expect("Could not initialize the database client");
 
+    let cors = CorsOptions::default()
+        .allowed_origins(AllowedOrigins::all())
+        .allowed_methods(
+            vec![Method::Get, Method::Post, Method::Patch]
+                .into_iter()
+                .map(From::from)
+                .collect(),
+        )
+        .allow_credentials(true);
+
     rocket::build()
         .mount("/", routes![login, register])
         .manage(client)
+        .attach(cors.to_cors().unwrap())
 }
 
 #[cfg(test)]

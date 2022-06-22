@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Box, Button, Grid, TextField } from '@mui/material';
+import axios from 'axios';
 
 const validationSchema = yup.object({
   email: yup
@@ -24,9 +25,23 @@ export const RegisterForm = () => {
       password: '',
       passwordConfirmation: '',
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    validationSchema,
+    onSubmit: async (values) => {
+      const json = JSON.stringify({
+        username: values.email,
+        password: values.password,
+      });
+
+      const configHeaders = {
+        'content-type': 'application/json',
+        Accept: 'application/json',
+      };
+      const res = await axios.post(
+        'http://localhost:8000/api/v1/register',
+        json,
+        { headers: configHeaders }
+      );
+      console.log(res);
     },
   });
 

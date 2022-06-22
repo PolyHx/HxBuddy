@@ -1,5 +1,4 @@
 use mongodb::bson::doc;
-use mongodb::bson::oid::ObjectId;
 use mongodb::Client;
 use rocket::serde::json::Json;
 use rocket::State;
@@ -28,7 +27,7 @@ pub async fn register(conn: &State<Client>, user: Json<UserLogin>) -> Result<Jso
     // Insert username and hash to the database
     let insert_result = collection.insert_one(user.clone(), None).await.unwrap();
 
-    let id = ObjectId::parse_str(insert_result.inserted_id.to_string()).unwrap();
+    let id = insert_result.inserted_id.as_object_id().unwrap();
     user.set_id(Some(id));
     let jwt = create_jwt(user).unwrap();
     Ok(jwt.into())

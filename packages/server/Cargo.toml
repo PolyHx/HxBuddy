@@ -24,6 +24,11 @@ version = "2.2.2"
 version = "0.5.0-rc.2"
 features = ["json"]
 
+[dependencies.rocket_cors]
+# version = "0.6.0-alpha1"
+git = "https://github.com/lawliet89/rocket_cors"
+branch = "master"
+
 [dependencies.serde]
 version = "1.0.136"
 features = ["derive"]
