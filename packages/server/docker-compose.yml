@@ -1,0 +1,58 @@
+# https://dev.to/erezhod/setting-up-a-nestjs-project-with-docker-for-back-end-development-30lg
+version: '3.8'
+
+services:
+  dev:
+    container_name: hxbuddy-dev
+    image: hxbuddy-dev:1.0.0
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:debug
+    ports:
+      - 3000:3000
+      - 9229:9229
+    networks:
+      - hxbuddy-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+    links:
+      - mongo
+
+  prod:
+    container_name: hxbuddy-prod
+    image: hxbuddy-prod:1.0.0
+    build:
+      context: .
+      target: production
+      dockerfile: ./Dockerfile
+    command: npm run start:prod
+    ports:
+      - 3000:3000
+      - 9229:9229
+    networks:
+      - hxbuddy-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongol
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
+    logging:
+      driver: none
+    networks:
+      - hxbuddy-network
+
+networks:
+  hxbuddy-network:
