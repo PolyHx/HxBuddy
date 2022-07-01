@@ -26,6 +26,10 @@ const navItems = [
     route: '/register',
     text: 'Register',
   },
+  {
+    route: '/login',
+    text: 'Login',
+  },
 ];
 const appName = 'HxBuddy';
 
@@ -62,7 +66,11 @@ export default function Navbar(props: any) {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Link to={item.route}>
+              <Link
+                to={item.route}
+                key={item.route}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
                 <Button key={item.route} sx={{ color: '#fff' }}>
                   {item.text}
                 </Button>

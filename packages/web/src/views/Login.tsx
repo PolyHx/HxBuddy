@@ -1,9 +1,9 @@
 import { Card, CardContent, Container, Divider, Paper } from '@mui/material';
 import { Background } from '../components/Background';
+import { LoginForm } from './Login/LoginForm';
 import { FormHeader } from './Register/FormHeader';
-import { RegisterForm } from './Register/RegisterForm';
 
-export const Register = () => {
+export const Login = () => {
   return (
     <Background>
       <Container>
@@ -12,7 +12,7 @@ export const Register = () => {
           <Divider />
           <Card>
             <CardContent>
-              <RegisterForm />
+              <LoginForm />
             </CardContent>
           </Card>
         </Paper>
