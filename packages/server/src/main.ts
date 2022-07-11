@@ -12,7 +12,8 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
+  console.log(process.env.DATABASE_URL);
+  app.enableCors();
   await app.listen(8000);
 }
 bootstrap();
