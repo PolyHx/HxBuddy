@@ -1,6 +1,11 @@
 import React, { useState, SyntheticEvent } from 'react';
 import { Tabs, Tab, Box, Typography } from '@mui/material';
 
+import DescriptionTab from './DescriptionTab';
+import SubmitTab from './SubmitTab';
+import DatasetTab from './DatasetTab';
+import RulesTab from './RulesTab';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -58,16 +63,16 @@ const ChallengeTabs = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Description
+        <DescriptionTab />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Submit
+        <SubmitTab />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Datasets
+        <DatasetTab />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Rules
+        <RulesTab />
       </TabPanel>
     </Box>
   );

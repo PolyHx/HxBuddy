@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import Navbar from './Navbar';
 import { Register } from './views/Register';
-import ChallengesDashboard from './components/ChallengesDashboard';
+import ChallengesDashboard from './components/challenges/ChallengesDashboard';
 
 export const Router = () => {
   return (

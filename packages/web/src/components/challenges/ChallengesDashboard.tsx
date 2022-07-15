@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 
 import SelectChallenges from './SelectChallenges';
-import ChallengeTabs from './ChallengeTabs';
+import ChallengeTabs from './challengeTabs/ChallengeTabs';
 
 const ChallengesDashboard = () => {
-  const [challenge, setChallenges] = useState('');
+  const [challenge, setChallenges] = useState({ id: '', name: '' });
 
   return (
     <Container>
