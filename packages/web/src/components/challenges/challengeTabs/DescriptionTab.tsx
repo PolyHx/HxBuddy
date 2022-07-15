@@ -1,9 +1,11 @@
 import React from 'react';
 
-type Props = {};
+type Props = { challenge: any };
 
-const DescriptionTab = (props: Props) => {
-  return <div>DescriptionTab</div>;
+const DescriptionTab = ({ challenge }: Props) => {
+  const { name, id } = challenge;
+
+  return <div>DescriptionTab for {name}</div>;
 };
 
 export default DescriptionTab;

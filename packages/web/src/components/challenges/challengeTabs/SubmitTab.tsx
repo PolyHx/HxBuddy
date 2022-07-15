@@ -1,9 +1,10 @@
 import React from 'react';
 
-type Props = {};
+type Props = { challenge: any };
 
-const SubmitTab = () => {
-  return <div>SubmitTab</div>;
+const SubmitTab = ({ challenge }: Props) => {
+  const { name, id } = challenge;
+  return <div>SubmitTab for {name}</div>;
 };
 
 export default SubmitTab;

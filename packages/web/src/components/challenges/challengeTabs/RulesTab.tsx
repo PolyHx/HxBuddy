@@ -1,9 +1,10 @@
 import React from 'react';
 
-type Props = {};
+type Props = { challenge: any };
 
-const RulesTab = () => {
-  return <div>RulesTab</div>;
+const RulesTab = ({ challenge }: Props) => {
+  const { name, id } = challenge;
+  return <div>RulesTab for {name}</div>;
 };
 
 export default RulesTab;

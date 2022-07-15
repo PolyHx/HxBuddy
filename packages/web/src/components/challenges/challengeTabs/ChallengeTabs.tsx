@@ -39,7 +39,7 @@ function a11yProps(index: number) {
   };
 }
 
-const ChallengeTabs = () => {
+const ChallengeTabs = ({ challenge }: any) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
@@ -63,16 +63,16 @@ const ChallengeTabs = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <DescriptionTab />
+        <DescriptionTab challenge={challenge} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <SubmitTab />
+        <SubmitTab challenge={challenge} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <DatasetTab />
+        <DatasetTab challenge={challenge} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <RulesTab />
+        <RulesTab challenge={challenge} />
       </TabPanel>
     </Box>
   );

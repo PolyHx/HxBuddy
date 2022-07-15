@@ -13,7 +13,11 @@ import SelectChallenges from './SelectChallenges';
 import ChallengeTabs from './challengeTabs/ChallengeTabs';
 
 const ChallengesDashboard = () => {
-  const [challenge, setChallenges] = useState({ id: '', name: '' });
+  const [challenge, setChallenges] = useState({
+    id: 'challenge1',
+    name: 'Challenge 1',
+    value: 10,
+  });
 
   return (
     <Container>
@@ -33,7 +37,7 @@ const ChallengesDashboard = () => {
         </Grid>
         <Card sx={{ margin: 2 }}>
           <CardContent>
-            <ChallengeTabs />
+            <ChallengeTabs challenge={challenge} />
           </CardContent>
         </Card>
       </Paper>
