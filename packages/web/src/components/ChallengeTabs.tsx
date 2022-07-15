@@ -47,6 +47,8 @@ const ChallengeTabs = () => {
         <Tabs
           value={value}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
           aria-label="basic tabs example"
         >
           <Tab label="Description" {...a11yProps(0)} />

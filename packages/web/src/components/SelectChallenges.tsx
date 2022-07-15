@@ -3,13 +3,15 @@ import { Box, InputLabel, MenuItem, FormControl } from '@mui/material';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const SelectChallenges = ({ challenge, setChallenges }) => {
+type Props = { challenge: any; setChallenges: (challenge: any) => void };
+
+const SelectChallenges = ({ challenge, setChallenges }: Props) => {
   const handleChange = (event: SelectChangeEvent) => {
     setChallenges(event.target.value as string);
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 0, marginTop: 3, marginRight: 2 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Challenge</InputLabel>
         <Select
