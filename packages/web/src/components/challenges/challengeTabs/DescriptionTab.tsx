@@ -1,11 +1,25 @@
 import React from 'react';
 
+import text from '../../../textChallenge/en.json';
+
 type Props = { challenge: any };
 
-const DescriptionTab = ({ challenge }: Props) => {
-  const { name, id } = challenge;
+type Challenge = {
+  name: string;
+  id: keyof typeof text;
+};
 
-  return <div>DescriptionTab for {name}</div>;
+const DescriptionTab = ({ challenge }: Props) => {
+  const { name, id }: Challenge = challenge;
+
+  return (
+    <div>
+      <h2>
+        {text[id].headline} ({name}){' '}
+      </h2>
+      <p>{text[id].description}</p>
+    </div>
+  );
 };
 
 export default DescriptionTab;
