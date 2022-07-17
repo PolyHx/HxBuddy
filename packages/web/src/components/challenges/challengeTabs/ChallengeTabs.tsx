@@ -6,24 +6,26 @@ import SubmitTab from './SubmitTab';
 import DatasetTab from './DatasetTab';
 import RulesTab from './RulesTab';
 
+import { Challenge } from '../../../views/Challenges/ChallengesDashboard';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
-  value: number;
+  selectedChallenge: number;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+  const { children, selectedChallenge, index, ...other } = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
+      hidden={selectedChallenge !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
+      {selectedChallenge === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>
@@ -39,18 +41,20 @@ function a11yProps(index: number) {
   };
 }
 
-const ChallengeTabs = ({ challenge }: any) => {
-  const [value, setValue] = useState(0);
+type Props = { challenge: Challenge };
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+const ChallengeTabs = ({ challenge }: Props) => {
+  const [selectedChallenge, setSelectedChallenge] = useState(0);
+
+  const handleChange = (event: SyntheticEvent, challengeIndex: number) => {
+    setSelectedChallenge(challengeIndex);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={value}
+          value={selectedChallenge}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="auto"
@@ -62,16 +66,16 @@ const ChallengeTabs = ({ challenge }: any) => {
           <Tab label="Rules" {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel selectedChallenge={selectedChallenge} index={0}>
         <DescriptionTab challenge={challenge} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel selectedChallenge={selectedChallenge} index={1}>
         <SubmitTab challenge={challenge} />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel selectedChallenge={selectedChallenge} index={2}>
         <DatasetTab challenge={challenge} />
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel selectedChallenge={selectedChallenge} index={3}>
         <RulesTab challenge={challenge} />
       </TabPanel>
     </Box>

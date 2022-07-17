@@ -3,9 +3,14 @@ import { Box, InputLabel, MenuItem, FormControl } from '@mui/material';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-type Props = { challenge: any; setChallenges: (challenge: any) => void };
+import { Challenge } from '../../views/Challenges/ChallengesDashboard';
 
-const challengesList = [
+type Props = {
+  challenge: Challenge;
+  setChallenges: (challenge: Challenge) => void;
+};
+
+const challengesList: Challenge[] = [
   { id: 'challenge1', name: 'Challenge 1', value: 10 },
   { id: 'challenge2', name: 'Challenge 2', value: 20 },
   { id: 'challenge3', name: 'Challenge 3', value: 30 },
@@ -15,7 +20,7 @@ const challengesList = [
 ];
 
 const SelectChallenges = ({ challenge, setChallenges }: Props) => {
-  const handleChange = (challenge: Object) => {
+  const handleChange = (challenge: Challenge) => {
     console.log(challenge);
     setChallenges(challenge);
   };
@@ -30,9 +35,9 @@ const SelectChallenges = ({ challenge, setChallenges }: Props) => {
           value={challenge.value}
           label="Challenge"
         >
-          {challengesList.map((challenge) => (
+          {challengesList.map((challenge, index) => (
             <MenuItem
-              key={challenge.id}
+              key={index}
               value={challenge.value}
               onClick={() => handleChange(challenge)}
             >
