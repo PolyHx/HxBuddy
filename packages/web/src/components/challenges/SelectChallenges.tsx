@@ -35,9 +35,9 @@ const SelectChallenges = ({ challenge, setChallenges }: Props) => {
           value={challenge.value}
           label="Challenge"
         >
-          {challengesList.map((challenge, index) => (
+          {challengesList.map((challenge) => (
             <MenuItem
-              key={index}
+              key={challenge.id}
               value={challenge.value}
               onClick={() => handleChange(challenge)}
             >
