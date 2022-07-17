@@ -6,7 +6,7 @@ import SubmitTab from './SubmitTab';
 import DatasetTab from './DatasetTab';
 import RulesTab from './RulesTab';
 
-import { Challenge } from '../../../views/Challenges/ChallengesDashboard';
+import { IChallenge } from '../../../types';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,7 +41,7 @@ function a11yProps(index: number) {
   };
 }
 
-type Props = { challenge: Challenge };
+type Props = { challenge: IChallenge };
 
 const ChallengeTabs = ({ challenge }: Props) => {
   const [selectedChallengeIndex, setSelectedChallengeIndex] = useState(0);

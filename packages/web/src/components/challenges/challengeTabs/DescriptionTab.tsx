@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Challenge } from '../../../views/Challenges/ChallengesDashboard';
+import { IChallenge } from '../../../types';
 
 import text from '../../../textChallenge/en.json';
 
-type Props = { challenge: Challenge };
+type Props = { challenge: IChallenge };
 
 const DescriptionTab = ({ challenge }: Props) => {
-  const { name, id }: Challenge = challenge;
+  const { name, id }: IChallenge = challenge;
 
   return (
     <div>
