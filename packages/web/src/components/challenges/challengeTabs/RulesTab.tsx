@@ -1,16 +1,13 @@
 import React from 'react';
 
+import { IChallenge } from '../../../types';
+
 import text from '../../../textChallenge/en.json';
 
-type Props = { challenge: any };
-
-type Challenge = {
-  name: string;
-  id: keyof typeof text;
-};
+type Props = { challenge: IChallenge };
 
 const RulesTab = ({ challenge }: Props) => {
-  const { name, id }: Challenge = challenge;
+  const { name, id }: IChallenge = challenge;
   return (
     <div>
       <h2>
@@ -19,6 +16,7 @@ const RulesTab = ({ challenge }: Props) => {
       <p>{text[id].rules}</p>
     </div>
   );
+
 };
 
 export default RulesTab;

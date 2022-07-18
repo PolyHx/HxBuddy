@@ -9,13 +9,15 @@ import {
   CardContent,
 } from '@mui/material';
 
-import SelectChallenges from './SelectChallenges';
-import ChallengeTabs from './challengeTabs/ChallengeTabs';
+import SelectChallenges from '../../components/challenges/SelectChallenges';
+import ChallengeTabs from '../../components/challenges/challengeTabs/ChallengeTabs';
+
+import { IChallenge } from '../../types';
 
 const ChallengesDashboard = () => {
-  const [challenge, setChallenges] = useState({
-    id: 'challenge1',
+  const [challenge, setChallenges] = useState<IChallenge>({
     name: 'Challenge 1',
+    id: 'challenge1',
     value: 10,
   });
 

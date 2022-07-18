@@ -3,9 +3,14 @@ import { Box, InputLabel, MenuItem, FormControl } from '@mui/material';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-type Props = { challenge: any; setChallenges: (challenge: any) => void };
+import { IChallenge } from '../../types';
 
-const challengesList = [
+type Props = {
+  challenge: IChallenge;
+  setChallenges: (challenge: IChallenge) => void;
+};
+
+const challengesList: IChallenge[] = [
   { id: 'challenge1', name: 'Challenge 1', value: 10 },
   { id: 'challenge2', name: 'Challenge 2', value: 20 },
   { id: 'challenge3', name: 'Challenge 3', value: 30 },
@@ -15,7 +20,7 @@ const challengesList = [
 ];
 
 const SelectChallenges = ({ challenge, setChallenges }: Props) => {
-  const handleChange = (challenge: Object) => {
+  const handleChange = (challenge: IChallenge) => {
     console.log(challenge);
     setChallenges(challenge);
   };

@@ -1,17 +1,19 @@
 import React from 'react';
 
+
 import text from '../../../textChallenge/en.json';
 import Uploader from '../Uploader';
 
-type Props = { challenge: any };
+import { IChallenge } from '../../../types';
 
-type Challenge = {
-  name: string;
-  id: keyof typeof text;
-};
+
+import text from '../../../textChallenge/en.json';
+
+type Props = { challenge: IChallenge };
 
 const DatasetTab = ({ challenge }: Props) => {
-  const { name, id }: Challenge = challenge;
+
+  const { name, id }: IChallenge = challenge;
   return (
     <div>
       <h2>
