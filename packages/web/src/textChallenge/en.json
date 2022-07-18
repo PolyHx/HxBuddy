@@ -1,26 +1,49 @@
 {
   "challenge1": {
     "headline": "Stroke detection",
-    "description": "Detects stroke using a webcam"
+    "description": "Detects stroke using a webcam",
+    "datasetText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "sumbitText":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "rules": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!"
   },
   "challenge2": {
     "headline": "Source code vulnerability detection",
-    "description": "Detects source code vulnerabilities"
+    "description": "Detects source code vulnerabilities",
+    "datasetText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "sumbitText":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "rules":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!"
+  
   },
   "challenge3": {
     "headline": "Language detection",
-    "description": "Detects language of a text"
+    "description": "Detects language of a text",
+    "datasetText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "sumbitText":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "rules":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!"
+  
   },
   "challenge4": {
     "headline": "Gun shot detection",
-    "description": "Detects gunshot inside an audio recording"
+    "description": "Detects gunshot inside an audio recording",
+    "datasetText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "sumbitText":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "rules":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!"
+  
   },
   "challenge5": {
     "headline": "Plant detection",
-    "description": "Detects plants in an image"
+    "description": "Detects plants in an image",
+    "datasetText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "sumbitText":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "rules":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!"
+  
   },
   "challenge6": {
     "headline": "Count the number of person",
-    "description": "Count the number of people in a video"
+    "description": "Count the number of people in a video",
+    "datasetText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "sumbitText":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!",
+    "rules":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit commodi id ipsam exercitationem incidunt, soluta, ipsa dolorem minima corporis quo nam, illum maiores hic quasi quas dicta dolore recusandae eaque!"
+  
   }
 }

@@ -11,7 +11,14 @@ type Challenge = {
 
 const SubmitTab = ({ challenge }: Props) => {
   const { name, id }: Challenge = challenge;
-  return <div>SubmitTab for {name}</div>;
+  return (
+    <div>
+      <h2>
+        Submission folder for {name}{' '}
+      </h2>
+      <p>{text[id].sumbitText}</p>
+    </div>
+  );
 };
 
 export default SubmitTab;

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import text from '../../../textChallenge/en.json';
+import Uploader from '../Uploader';
 
 type Props = { challenge: any };
 
@@ -11,7 +12,15 @@ type Challenge = {
 
 const DatasetTab = ({ challenge }: Props) => {
   const { name, id }: Challenge = challenge;
-  return <div>Dataset for {name} </div>;
+  return (
+    <div>
+      <h2>
+        Dataset for {name}{' '}
+      </h2>
+      <p>{text[id].datasetText}</p>
+      <Uploader/>
+    </div>
+  );
 };
 
 export default DatasetTab;

@@ -11,7 +11,14 @@ type Challenge = {
 
 const RulesTab = ({ challenge }: Props) => {
   const { name, id }: Challenge = challenge;
-  return <div>RulesTab for {name}</div>;
+  return (
+    <div>
+      <h2>
+        Rules for {name}{' '}
+      </h2>
+      <p>{text[id].rules}</p>
+    </div>
+  );
 };
 
 export default RulesTab;
