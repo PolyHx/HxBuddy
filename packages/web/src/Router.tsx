@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from './App';
 import Navbar from './views/Navbar';
 import { Login } from './views/Login';
 import { Register } from './views/Register';
@@ -7,7 +6,6 @@ import ChallengesDashboard from './views/Challenges/ChallengesDashboard';
 import setAuthToken from './utils/setAuthToken';
 import { useContext, useEffect } from 'react';
 import { Context as AuthContext } from './context/AuthContext';
-import axios from 'axios';
 
 const guestItems = [
   {
