@@ -5,6 +5,11 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { Router } from './Router';
+import setAuthToken from './utils/setAuthToken';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const darkTheme = createTheme({
   palette: {
