@@ -1,36 +1,39 @@
 import createDataContext from './createDataContext';
 
-const authReducer = (state: any, action: any) => {
+interface IAction {
+  type: string;
+  payload: any;
+}
+
+const authReducer = (state: any, action: IAction) => {
   switch (action.type) {
-    case 'signout':
-      return { token: null, role: null };
-    case 'signin':
+    case 'signOut':
+      return { token: null };
+    case 'signIn':
       return {
         token: action.payload.token,
-        role: action.payload.role,
       };
     default:
       return state;
   }
 };
 
-const signin = (dispatch: any) => {
-  return ({ token, role }: { token: string; role: string }) => {
+const signin = (dispatch: Function) => {
+  return ({ token }: { token: string }) => {
     localStorage.setItem('token', token);
     dispatch({
-      type: 'signin',
+      type: 'signIn',
       payload: {
         token,
-        role,
       },
     });
   };
 };
 
-const signout = (dispatch: any) => {
+const signout = (dispatch: Function) => {
   return () => {
     localStorage.removeItem('token');
-    dispatch({ type: 'signout' });
+    dispatch({ type: 'signOut' });
   };
 };
 
