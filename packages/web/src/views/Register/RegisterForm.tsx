@@ -31,20 +31,9 @@ export const RegisterForm = () => {
     onSubmit: async (values) => {
       const { name, email, password } = values;
 
-      const json = JSON.stringify({
-        name,
-        email,
-        password,
-      });
-
-      const configHeaders = {
-        'content-type': 'application/json',
-        Accept: 'application/json',
-      };
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/participant`,
-        json,
-        { headers: configHeaders }
+        values
       );
       console.log(res);
     },

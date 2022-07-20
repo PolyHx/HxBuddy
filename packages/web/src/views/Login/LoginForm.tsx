@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { Box, Button, Grid, TextField } from '@mui/material';
 import axios from 'axios';
 import { Context as AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = yup.object({
   email: yup
@@ -18,6 +19,7 @@ const validationSchema = yup.object({
 
 export const LoginForm = () => {
   const { signIn } = useContext<any>(AuthContext);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,14 +27,13 @@ export const LoginForm = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const { email, password } = values;
-
       try {
         const res = await axios.post(
           `${import.meta.env.VITE_API_URL}/auth/login`,
           values
         );
         signIn({ token: res.data.token });
+        navigate('/');
       } catch (error) {
         console.log(error);
       }
