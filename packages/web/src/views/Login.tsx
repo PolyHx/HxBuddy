@@ -1,7 +1,7 @@
 import { Card, CardContent, Container, Divider, Paper } from '@mui/material';
 import { Background } from '../components/Background';
 import { LoginForm } from './Login/LoginForm';
-import { FormHeader } from './Register/FormHeader';
+import { FormHeader } from './Login/FormHeader';
 
 export const Login = () => {
   return (

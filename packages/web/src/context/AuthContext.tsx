@@ -18,7 +18,7 @@ const authReducer = (state: any, action: IAction) => {
   }
 };
 
-const signin = (dispatch: Function) => {
+const signIn = (dispatch: Function) => {
   return ({ token }: { token: string }) => {
     localStorage.setItem('token', token);
     dispatch({
@@ -30,7 +30,7 @@ const signin = (dispatch: Function) => {
   };
 };
 
-const signout = (dispatch: Function) => {
+const signOut = (dispatch: Function) => {
   return () => {
     localStorage.removeItem('token');
     dispatch({ type: 'signOut' });
@@ -39,6 +39,6 @@ const signout = (dispatch: Function) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout },
-  { token: null, role: null }
+  { signIn, signOut },
+  { token: null }
 );

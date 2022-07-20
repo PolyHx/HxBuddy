@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Box, Button, Grid, TextField } from '@mui/material';
 import axios from 'axios';
+import { Context as AuthContext } from '../../context/AuthContext';
 
 const validationSchema = yup.object({
   email: yup
@@ -16,6 +17,7 @@ const validationSchema = yup.object({
 });
 
 export const LoginForm = () => {
+  const { state, signIn } = useContext<any>(AuthContext);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,19 +27,15 @@ export const LoginForm = () => {
     onSubmit: async (values) => {
       const { email, password } = values;
 
-      const json = JSON.stringify({
-        email,
-        password,
-      });
-
-      const configHeaders = {
-        'content-type': 'application/json',
-        Accept: 'application/json',
-      };
-      const res = await axios.post('http://localhost:8000/auth/login', json, {
-        headers: configHeaders,
-      });
-      console.log(res);
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/auth/login`,
+          values
+        );
+        signIn({ token: res.data.token });
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
