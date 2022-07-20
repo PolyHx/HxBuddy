@@ -17,7 +17,7 @@ const validationSchema = yup.object({
 });
 
 export const LoginForm = () => {
-  const { state, signIn } = useContext<any>(AuthContext);
+  const { signIn } = useContext<any>(AuthContext);
   const formik = useFormik({
     initialValues: {
       email: '',
