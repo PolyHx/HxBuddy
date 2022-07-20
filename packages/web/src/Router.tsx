@@ -3,6 +3,7 @@ import App from './App';
 import Navbar from './Navbar';
 import { Login } from './views/Login';
 import { Register } from './views/Register';
+import ChallengesDashboard from './views/Challenges/ChallengesDashboard';
 
 export const Router = () => {
   return (
@@ -12,6 +13,7 @@ export const Router = () => {
         <Route path="/" element={<App />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />"
+        <Route path="/challenges" element={<ChallengesDashboard />} />
       </Routes>
     </BrowserRouter>
   );
