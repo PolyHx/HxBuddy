@@ -9,19 +9,13 @@ import {
   CardContent,
 } from '@mui/material';
 
-import text from '../../textChallenge/en.json';
-
 import SelectChallenges from '../../components/challenges/SelectChallenges';
 import ChallengeTabs from '../../components/challenges/challengeTabs/ChallengeTabs';
 
-export interface Challenge {
-  name: string;
-  id: keyof typeof text;
-  value: number;
-}
+import { IChallenge } from '../../types';
 
 const ChallengesDashboard = () => {
-  const [challenge, setChallenges] = useState<Challenge>({
+  const [challenge, setChallenges] = useState<IChallenge>({
     name: 'Challenge 1',
     id: 'challenge1',
     value: 10,
