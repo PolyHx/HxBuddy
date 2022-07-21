@@ -50,7 +50,7 @@ export const Router = () => {
         {!state.token && (
           <>
             <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />"
+            <Route path="/login" element={<Login />} />
           </>
         )}
       </Routes>
