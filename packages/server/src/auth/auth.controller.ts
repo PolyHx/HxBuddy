@@ -15,18 +15,6 @@ export class AuthController {
     private participantService: ParticipantService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  async me(@Req() req: any) {
-    try {
-      const { user } = req;
-      delete user.password;
-      return user;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   @Post('participant')
   async registerParticipant(
     @Body() createParticipantDto: CreateParticipantDto,
