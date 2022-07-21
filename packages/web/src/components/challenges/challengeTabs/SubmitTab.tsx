@@ -7,7 +7,7 @@ import text from '../../../textChallenge/en.json';
 type Props = { challenge: IChallenge };
 
 const SubmitTab = ({ challenge }: Props) => {
-  const { name, id }: IChallenge = challenge;
+  const { name, id } = challenge;
   return <div>SubmitTab for {name}</div>;
 };
 
