@@ -19,3 +19,5 @@ Le passeport vaccinal pour les hackathons
 - Run the server with `./run.sh server`
 
 #### Build and run the server with Docker
+
+- `docker-compose up`
