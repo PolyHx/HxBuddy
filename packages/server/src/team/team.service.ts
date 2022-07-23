@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import {
@@ -35,7 +35,7 @@ export class TeamService {
   }
 
   remove(id: string) {
-    return this.teamModel.remove(id);
+    return this.teamModel.remove(new mongoose.Types.ObjectId(id));
   }
 
   async joinTeam(teamId: string, participantId: string) {
@@ -47,8 +47,11 @@ export class TeamService {
       participants: participant,
     });
 
-    if (team) {
-      throw new Error('Participant already in a team');
+    if (team.length > 0) {
+      throw new HttpException(
+        'Participant is already in a team',
+        HttpStatus.CONFLICT,
+      );
     }
 
     return await this.teamModel.updateOne(
