@@ -12,26 +12,30 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { Context as AuthContext } from '../context/AuthContext';
 
 const drawerWidth = 240;
-const navItems = [
-  {
-    route: '/',
-    text: 'Home',
-  },
-  {
-    route: '/register',
-    text: 'Register',
-  },
-];
+
 const appName = 'HxBuddy';
 
-export default function Navbar(props: any) {
+interface NavbarProps {
+  window?: () => Window;
+  navItems: Array<NavItem>;
+  logout?: boolean;
+}
+
+interface NavItem {
+  route: string;
+  text: string;
+}
+
+export default function Navbar(props: NavbarProps) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { signOut } = useContext<any>(AuthContext);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -61,13 +65,34 @@ export default function Navbar(props: any) {
             {appName}
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Link to={item.route}>
+            {props.navItems.map((item) => (
+              <Link
+                to={item.route}
+                key={item.route}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
                 <Button key={item.route} sx={{ color: '#fff' }}>
                   {item.text}
                 </Button>
               </Link>
             ))}
+            {props.logout && (
+              <Link
+                to="/"
+                key="/"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <Button
+                  sx={{ color: '#fff' }}
+                  onClick={() => {
+                    localStorage.removeItem('token');
+                    signOut();
+                  }}
+                >
+                  Logout
+                </Button>
+              </Link>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -94,7 +119,7 @@ export default function Navbar(props: any) {
             </Typography>
             <Divider />
             <List>
-              {navItems.map((item) => (
+              {props.navItems.map((item) => (
                 <Link
                   style={{ textDecoration: 'none', color: 'inherit' }}
                   to={item.route}
@@ -107,6 +132,23 @@ export default function Navbar(props: any) {
                   </ListItem>
                 </Link>
               ))}
+              {props.logout && (
+                <Link
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                  to="/"
+                  key="/"
+                  onClick={() => {
+                    localStorage.removeItem('token');
+                    signOut();
+                  }}
+                >
+                  <ListItem disablePadding>
+                    <ListItemButton sx={{ textAlign: 'center' }}>
+                      <ListItemText primary="Logout" />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )}
             </List>
           </Box>
         </Drawer>
