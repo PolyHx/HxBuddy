@@ -21,6 +21,3 @@ Le passeport vaccinal pour les hackathons
 #### Build and run the server with Docker
 
 - `docker-compose up`
-# MAAHxBuddy
-"# MAAHxBuddy" 
-"# MAAHxBuddy" 
