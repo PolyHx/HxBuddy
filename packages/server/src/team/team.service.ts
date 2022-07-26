@@ -38,7 +38,7 @@ export class TeamService {
       },
     });
 
-    return team !== null && team._id.toString() === teamId;
+    return team?._id.toString() === teamId;
   }
 
   async update(id: string, userId: string, updateTeamDto: UpdateTeamDto) {
