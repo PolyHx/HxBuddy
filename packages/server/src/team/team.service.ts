@@ -30,24 +30,48 @@ export class TeamService {
     return this.teamModel.findOne({ _id: id });
   }
 
-  update(id: string, updateTeamDto: UpdateTeamDto) {
-    return this.teamModel.updateOne({ _id: id }, updateTeamDto);
-  }
-
-  remove(id: string) {
-    return this.teamModel.remove(new mongoose.Types.ObjectId(id));
-  }
-
-  async joinTeam(teamId: string, participantId: string) {
-    // Check if participant is already in a team
-    const participant = await this.participantModel.findOne({
-      _id: participantId,
+  async isMemberOfTeam(teamId: string, userId: string): Promise<boolean> {
+    const participant = await this.participantModel.findOne({ userId });
+    const team = await this.teamModel.findOne({
+      $expr: {
+        $in: [participant, '$participants'],
+      },
     });
-    const team = await this.teamModel.find({
+
+    console.log({ team, teamId, userId });
+    return team !== null && team._id.toString() === teamId;
+  }
+
+  async update(id: string, userId: string, updateTeamDto: UpdateTeamDto) {
+    if (!(await this.isMemberOfTeam(id, userId))) {
+      throw new HttpException(
+        "You're not a member of this team",
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    return await this.teamModel.updateOne({ _id: id }, updateTeamDto);
+  }
+
+  async remove(id: string, userId: string) {
+    if (!(await this.isMemberOfTeam(id, userId))) {
+      throw new HttpException(
+        "You're not a member of this team",
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    return await this.teamModel.remove(new mongoose.Types.ObjectId(id));
+  }
+
+  async joinTeam(teamId: string, userId: string) {
+    // Check if participant is already in a team
+    const participant = await this.participantModel.findOne({ userId });
+    const team = await this.teamModel.findOne({
       participants: participant,
     });
 
-    if (team.length > 0) {
+    if (team !== null) {
       throw new HttpException(
         'Participant is already in a team',
         HttpStatus.CONFLICT,
@@ -56,7 +80,7 @@ export class TeamService {
 
     return await this.teamModel.updateOne(
       { _id: teamId },
-      { $push: { participants: participantId } },
+      { $push: { participants: participant._id } },
     );
   }
 }
