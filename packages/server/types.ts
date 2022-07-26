@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-export type UserRole = 'participant' | 'admin';
+export type UserRole = 'participant';
 
 export interface Payload {
   id: Types.ObjectId;

@@ -55,6 +55,7 @@ export class TeamController {
   joinTeam(
     @Request() req,
     @Param('teamId') teamId: string,
+    // This param is necessary in order for SelfParticipantAuthGuard to work
     @Param('id') _participantId: string,
   ) {
     return this.teamService.joinTeam(teamId, req.user.id);

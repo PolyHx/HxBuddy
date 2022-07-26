@@ -38,7 +38,6 @@ export class TeamService {
       },
     });
 
-    console.log({ team, teamId, userId });
     return team !== null && team._id.toString() === teamId;
   }
 
