@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Box, Button, Grid, TextField } from '@mui/material';
 import axios from 'axios';
+import { Context as AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = yup.object({
-  name: yup.string().required('Name is required'),
   email: yup
     .string()
     .email('Enter a valid email')
@@ -14,46 +15,34 @@ const validationSchema = yup.object({
     .string()
     .min(8, 'Password should be of minimum 8 characters length')
     .required('Password is required'),
-  passwordConfirmation: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-export const RegisterForm = () => {
+export const LoginForm = () => {
+  const { signIn } = useContext<any>(AuthContext);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      name: '',
       email: '',
       password: '',
-      passwordConfirmation: '',
     },
     validationSchema,
     onSubmit: async (values) => {
-      const { name, email, password } = values;
-
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/participant`,
-        values
-      );
-      console.log(res);
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/auth/login`,
+          values
+        );
+        signIn({ token: res.data.token });
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   return (
     <Box component="form" onSubmit={formik.handleSubmit} autoComplete="off">
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            id="name"
-            name="name"
-            label="Name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-          />
-        </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
@@ -79,25 +68,7 @@ export const RegisterForm = () => {
             helperText={formik.touched.password && formik.errors.password}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            id="passwordConfirmation"
-            name="passwordConfirmation"
-            label="Password confirmation"
-            type="password"
-            value={formik.values.passwordConfirmation}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.passwordConfirmation &&
-              Boolean(formik.errors.passwordConfirmation)
-            }
-            helperText={
-              formik.touched.passwordConfirmation &&
-              formik.errors.passwordConfirmation
-            }
-          />
-        </Grid>
+
         <Grid item xs={12}>
           <Button color="primary" variant="contained" fullWidth type="submit">
             Submit
