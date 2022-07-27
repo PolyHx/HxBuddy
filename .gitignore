@@ -10,6 +10,7 @@ npm-debug.*
 *.orig.*
 web-build/
 target/
+coverage/
 *.env
 
 # macOS
