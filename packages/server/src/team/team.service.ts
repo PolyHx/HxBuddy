@@ -58,11 +58,10 @@ export class TeamService {
       );
     }
 
-    return await this.teamModel.remove(new mongoose.Types.ObjectId(id));
+    return await this.teamModel.remove(id);
   }
 
   async joinTeam(teamId: string, participantId: string) {
-    // Check if participant is already in a team
     const team = await this.teamModel.findOne({
       $expr: {
         $in: [participantId, '$participants'],
