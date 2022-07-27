@@ -14,6 +14,7 @@ import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { SelfParticipantAuthGuard } from 'src/auth/participant.guard';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { User } from 'src/user/user.schema';
 
 @Controller('team')
 export class TeamController {
@@ -37,27 +38,31 @@ export class TeamController {
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
-    @Request() req,
+    @Request() req: { user: User },
     @Param('id') teamId: string,
     @Body() updateTeamDto: UpdateTeamDto,
   ) {
-    return this.teamService.update(teamId, req.user.id, updateTeamDto);
+    return this.teamService.update(
+      teamId,
+      req.user.participantId,
+      updateTeamDto,
+    );
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Request() req, @Param('id') teamId: string) {
-    return this.teamService.remove(teamId, req.user.id);
+  remove(@Request() req: { user: User }, @Param('id') teamId: string) {
+    return this.teamService.remove(teamId, req.user.participantId);
   }
 
   @UseGuards(SelfParticipantAuthGuard)
   @Patch(':teamId/join/:id')
   joinTeam(
-    @Request() req,
+    @Request() req: { user: User },
     @Param('teamId') teamId: string,
     // This param is necessary in order for SelfParticipantAuthGuard to work
     @Param('id') _participantId: string,
   ) {
-    return this.teamService.joinTeam(teamId, req.user.id);
+    return this.teamService.joinTeam(teamId, req.user.participantId);
   }
 }

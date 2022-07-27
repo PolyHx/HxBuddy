@@ -1,21 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import {
-  Participant,
-  ParticipantDocument,
-} from 'src/participant/participant.schema';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { Team, TeamDocument } from './team.schema';
 
 @Injectable()
 export class TeamService {
-  constructor(
-    @InjectModel(Team.name) private teamModel: Model<TeamDocument>,
-    @InjectModel(Participant.name)
-    private participantModel: Model<ParticipantDocument>,
-  ) {}
+  constructor(@InjectModel(Team.name) private teamModel: Model<TeamDocument>) {}
 
   create(createTeamDto: CreateTeamDto) {
     const team = new this.teamModel(createTeamDto);
@@ -30,19 +22,25 @@ export class TeamService {
     return this.teamModel.findOne({ _id: id });
   }
 
-  async isMemberOfTeam(teamId: string, userId: string): Promise<boolean> {
-    const participant = await this.participantModel.findOne({ userId });
+  async isMemberOfTeam(
+    teamId: string,
+    participantId: string,
+  ): Promise<boolean> {
     const team = await this.teamModel.findOne({
       $expr: {
-        $in: [participant, '$participants'],
+        $in: [participantId, '$participants'],
       },
     });
 
     return team?._id.toString() === teamId;
   }
 
-  async update(id: string, userId: string, updateTeamDto: UpdateTeamDto) {
-    if (!(await this.isMemberOfTeam(id, userId))) {
+  async update(
+    id: string,
+    participantId: string,
+    updateTeamDto: UpdateTeamDto,
+  ) {
+    if (!(await this.isMemberOfTeam(id, participantId))) {
       throw new HttpException(
         "You're not a member of this team",
         HttpStatus.UNAUTHORIZED,
@@ -52,8 +50,8 @@ export class TeamService {
     return await this.teamModel.updateOne({ _id: id }, updateTeamDto);
   }
 
-  async remove(id: string, userId: string) {
-    if (!(await this.isMemberOfTeam(id, userId))) {
+  async remove(id: string, participantId: string) {
+    if (!(await this.isMemberOfTeam(id, participantId))) {
       throw new HttpException(
         "You're not a member of this team",
         HttpStatus.UNAUTHORIZED,
@@ -63,11 +61,12 @@ export class TeamService {
     return await this.teamModel.remove(new mongoose.Types.ObjectId(id));
   }
 
-  async joinTeam(teamId: string, userId: string) {
+  async joinTeam(teamId: string, participantId: string) {
     // Check if participant is already in a team
-    const participant = await this.participantModel.findOne({ userId });
     const team = await this.teamModel.findOne({
-      participants: participant,
+      $expr: {
+        $in: [participantId, '$participants'],
+      },
     });
 
     if (team !== null) {
@@ -79,7 +78,7 @@ export class TeamService {
 
     return await this.teamModel.updateOne(
       { _id: teamId },
-      { $push: { participants: participant._id } },
+      { $push: { participants: participantId } },
     );
   }
 }
