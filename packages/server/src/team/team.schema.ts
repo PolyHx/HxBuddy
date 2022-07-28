@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Participant } from 'src/participant/participant.schema';
 
 export type TeamDocument = Team & Document;
 
@@ -13,7 +12,7 @@ export class Team {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Participant' }],
     required: true,
   })
-  participants: Participant[];
+  participants: string[];
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team);
