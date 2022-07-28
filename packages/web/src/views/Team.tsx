@@ -1,11 +1,23 @@
 import { Container, Paper } from '@mui/material';
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { ITeam } from '../types';
 import { TeamDisplay } from './Team/TeamDisplay';
 import { TeamPicker } from './Team/TeamPicker';
 
 export const Team = () => {
   const [team, setTeam] = useState<ITeam | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/team/me`);
+        setTeam(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
 
   return (
     <Container>

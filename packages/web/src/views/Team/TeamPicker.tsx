@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import axios from 'axios';
 import React from 'react';
 import { ITeam } from '../../types';
 
@@ -16,16 +17,39 @@ export const TeamPicker = ({
 }) => {
   const [teamField, setTeamField] = React.useState<string>('');
 
-  const handleSubmit = () => {
-    setTeam({
-      name: teamField,
-      id: '1',
-      participants: [
-        {
-          name: 'John Doe',
-        },
-      ],
-    });
+  const joinTeam = async (teamId: string) => {
+    try {
+      const res = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/team/${teamId}/join/`
+      );
+      setTeam(res.data);
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_URL}/team/name/${teamField}`
+    );
+
+    const team: ITeam | null = res.data ? res.data : null;
+
+    if (team) {
+      await joinTeam(team._id);
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/team/`, {
+        name: teamField,
+      });
+      const newTeam: ITeam = res.data;
+      await joinTeam(newTeam._id);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -35,7 +59,6 @@ export const TeamPicker = ({
       </Typography>
       <Card sx={{ margin: 2 }}>
         <CardContent>
-          {/* enter the name */}
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
               <TextField

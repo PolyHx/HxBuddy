@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
 import { TeamService } from './team.service';
 import { CreateTeamDto } from './dto/create-team.dto';
@@ -20,19 +21,33 @@ import { User } from 'src/user/user.schema';
 export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createTeamDto: CreateTeamDto) {
     return this.teamService.create(createTeamDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.teamService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  findByParticipant(@Request() req: { user: User }) {
+    return this.teamService.findByParticipant(req.user.participantId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') teamId: string) {
     return this.teamService.findOne(teamId);
+  }
+
+  @Get('name/:name')
+  findByName(@Param('name') name: string) {
+    return this.teamService.findByName(name);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -55,12 +70,15 @@ export class TeamController {
     return this.teamService.remove(teamId, req.user.participantId);
   }
 
-  @UseGuards(SelfParticipantAuthGuard)
-  @Patch(':teamId/join/:id')
-  joinTeam(
-    @Param('teamId') teamId: string,
-    @Param('id') participantId: string,
-  ) {
-    return this.teamService.joinTeam(teamId, participantId);
+  @UseGuards(JwtAuthGuard)
+  @Patch(':teamId/join/')
+  joinTeam(@Request() req: { user: User }, @Param('teamId') teamId: string) {
+    return this.teamService.joinTeam(teamId, req.user.participantId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':teamId/leave/')
+  leaveTeam(@Request() req: { user: User }, @Param('teamId') teamId: string) {
+    return this.teamService.leaveTeam(teamId, req.user.participantId);
   }
 }

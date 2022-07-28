@@ -19,7 +19,21 @@ export class TeamService {
   }
 
   findOne(id: string) {
-    return this.teamModel.findOne({ _id: id });
+    return this.teamModel.findOne({ _id: id }).populate('participants');
+  }
+
+  findByName(name: string) {
+    return this.teamModel.findOne({ name }).populate('participants');
+  }
+
+  findByParticipant(participantId: string) {
+    return this.teamModel
+      .findOne({
+        $expr: {
+          $in: [participantId, '$participants'],
+        },
+      })
+      .populate('participants');
   }
 
   async isMemberOfTeam(
@@ -75,9 +89,42 @@ export class TeamService {
       );
     }
 
-    return await this.teamModel.updateOne(
-      { _id: teamId },
-      { $push: { participants: participantId } },
-    );
+    return await this.teamModel
+      .findByIdAndUpdate(
+        teamId,
+        { $push: { participants: participantId } },
+        { new: true },
+      )
+      .populate('participants');
+  }
+
+  async leaveTeam(teamId: string, participantId: string) {
+    const team = await this.teamModel.findOne({
+      $expr: {
+        $in: [participantId, '$participants'],
+      },
+    });
+
+    if (team === null) {
+      throw new HttpException(
+        'Participant is not in a team',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    const updatedTeam = await this.teamModel
+      .findByIdAndUpdate(
+        teamId,
+        { $pull: { participants: participantId } },
+        { new: true },
+      )
+      .populate('participants');
+
+    if (updatedTeam.participants.length === 0) {
+      await this.teamModel.findByIdAndRemove(teamId);
+      return null;
+    }
+
+    return updatedTeam;
   }
 }

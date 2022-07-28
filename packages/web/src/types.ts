@@ -7,11 +7,12 @@ export interface IChallenge {
 }
 
 export interface ITeam {
-  id: string;
+  _id: string;
   name: string;
   participants: IParticipant[];
 }
 
 export interface IParticipant {
+  _id: string;
   name: string;
 }
