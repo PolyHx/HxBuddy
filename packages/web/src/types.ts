@@ -5,3 +5,14 @@ export interface IChallenge {
   id: keyof typeof text;
   value: number;
 }
+
+export interface ITeam {
+  _id: string;
+  name: string;
+  participants: IParticipant[];
+}
+
+export interface IParticipant {
+  _id: string;
+  name: string;
+}

@@ -13,7 +13,7 @@ export class Team {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Participant' }],
     required: true,
   })
-  participants: Participant[];
+  participants: string[];
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team);
