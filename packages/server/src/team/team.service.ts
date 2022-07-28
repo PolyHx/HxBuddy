@@ -9,9 +9,10 @@ import { Team, TeamDocument } from './team.schema';
 export class TeamService {
   constructor(@InjectModel(Team.name) private teamModel: Model<TeamDocument>) {}
 
-  create(createTeamDto: CreateTeamDto) {
+  async create(createTeamDto: CreateTeamDto, participantId: string) {
     const team = new this.teamModel(createTeamDto);
-    return team.save();
+    team.participants = [participantId];
+    return await (await team.save()).populate('participants');
   }
 
   findAll() {

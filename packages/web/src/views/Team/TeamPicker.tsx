@@ -17,18 +17,6 @@ export const TeamPicker = ({
 }) => {
   const [teamField, setTeamField] = React.useState<string>('');
 
-  const joinTeam = async (teamId: string) => {
-    try {
-      const res = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/team/${teamId}/join/`
-      );
-      setTeam(res.data);
-      return;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleSubmit = async () => {
     const res = await axios.get(
       `${import.meta.env.VITE_API_URL}/team/name/${teamField}`
@@ -37,16 +25,22 @@ export const TeamPicker = ({
     const team: ITeam | null = res.data ? res.data : null;
 
     if (team) {
-      await joinTeam(team._id);
-      return;
+      try {
+        const res = await axios.patch(
+          `${import.meta.env.VITE_API_URL}/team/${team._id}/join/`
+        );
+        setTeam(res.data);
+        return;
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/team/`, {
         name: teamField,
       });
-      const newTeam: ITeam = res.data;
-      await joinTeam(newTeam._id);
+      setTeam(res.data);
     } catch (error) {
       console.error(error);
     }

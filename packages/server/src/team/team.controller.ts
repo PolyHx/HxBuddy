@@ -23,8 +23,8 @@ export class TeamController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createTeamDto: CreateTeamDto) {
-    return this.teamService.create(createTeamDto);
+  create(@Request() req: { user: User }, @Body() createTeamDto: CreateTeamDto) {
+    return this.teamService.create(createTeamDto, req.user.participantId);
   }
 
   @UseGuards(JwtAuthGuard)
