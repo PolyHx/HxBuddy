@@ -8,7 +8,6 @@ import {Button} from '@mui/material';
 type Props = { challenge: IChallenge };
 
 const DatasetTab = ({ challenge }: Props) => {
-<<<<<<< HEAD
   const { name, id }: IChallenge = challenge;
   return (
     <div>
@@ -20,10 +19,6 @@ const DatasetTab = ({ challenge }: Props) => {
       <Button variant="contained" href= {text[id].datasetFiles} target="_blank">Dataset for {name}</Button>
     </div>
   );
-=======
-  const { name, id } = challenge;
-  return <div>Dataset for {name} </div>;
->>>>>>> master
 };
 
 export default DatasetTab;
