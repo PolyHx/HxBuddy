@@ -3,7 +3,9 @@ import React from 'react';
 import { IChallenge } from '../../../types';
 
 import text from '../../../textChallenge/en.json';
+import NewerUploader from '../NewerUploader';
 import NewUploader from '../NewUploader';
+import Markdown from 'markdown-to-jsx';
 
 type Props = { challenge: IChallenge };
 
@@ -14,8 +16,13 @@ const SubmitTab = ({ challenge }: Props) => {
       <h2>
         Submission folder for {name}{' '}
       </h2>
-      <p>{text[id].sumbitText}</p>
+      <Markdown options={{forceBlock: true}}>
+        {text[id].rules}
+      </Markdown>
       <NewUploader/>
+
+    
+
     </div>
   );
 };

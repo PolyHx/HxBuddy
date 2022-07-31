@@ -39,11 +39,13 @@ const validationSchema = yup.object({
       validationSchema,
       onSubmit: (values) => {
         console.log(values);
-        nbSubmit++; //COUNTS THE NUMBER OF SUBMISSIONS
+      
       },
     });
   
     return (
+
+
       <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
       <div>
       <Button variant="contained" component="label">

@@ -5,6 +5,7 @@ import DescriptionTab from './DescriptionTab';
 import SubmitTab from './SubmitTab';
 import DatasetTab from './DatasetTab';
 import RulesTab from './RulesTab';
+import Leaderboard from './Leaderboard';
 
 import { IChallenge } from '../../../types';
 
@@ -64,6 +65,7 @@ const ChallengeTabs = ({ challenge }: Props) => {
           <Tab label="Submit" {...a11yProps(1)} />
           <Tab label="Datasets" {...a11yProps(2)} />
           <Tab label="Rules" {...a11yProps(3)} />
+          <Tab label="Leaderboard" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel selectedChallengeIndex={selectedChallengeIndex} index={0}>
@@ -77,6 +79,9 @@ const ChallengeTabs = ({ challenge }: Props) => {
       </TabPanel>
       <TabPanel selectedChallengeIndex={selectedChallengeIndex} index={3}>
         <RulesTab challenge={challenge} />
+      </TabPanel>
+      <TabPanel selectedChallengeIndex={selectedChallengeIndex} index={4}>
+        <Leaderboard challenge={challenge} />
       </TabPanel>
     </Box>
   );

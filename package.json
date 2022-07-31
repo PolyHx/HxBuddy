@@ -15,6 +15,13 @@
   "author": "PolyAI",
   "license": "MIT",
   "devDependencies": {
+    "@types/styled-components": "^5.1.25",
     "lerna": "^4.0.0"
+  },
+  "dependencies": {
+    "markdown-to-jsx": "^7.1.7",
+    "react-dropzone": "^14.2.2",
+    "react-filepond": "^7.1.2",
+    "styled-components": "^4.1.3"
   }
 }
