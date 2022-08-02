@@ -20,7 +20,7 @@ const Uploader = () => {
     e.preventDefault();
     const url = 'http://localhost:3000/uploadFile';
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file); //myabe remove?
     formData.append('fileName', fileName);
     const config = {
       headers: {
@@ -28,9 +28,7 @@ const Uploader = () => {
       },
     };
 
-    const response = await[url, formData, config]
-    
-    .then((response) => {
+    const response = await[url, formData, config].then((response) => {
       console.log(response.data);
     });
 

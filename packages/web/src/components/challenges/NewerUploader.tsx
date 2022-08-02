@@ -1,30 +1,70 @@
-import React, {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone'
 
-export const MyDropzone = () => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader()
+import Dropzone from 'react-dropzone';
+import '../../App.css';
+import React, {useState} from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { Box, Button, Grid, TextField } from '@mui/material';
+import axios from 'axios';
 
-      reader.onabort = () => console.log('file reading was aborted')
-      reader.onerror = () => console.log('file reading has failed')
-      reader.onload = () => {
-      // Do whatever you want with the file contents
-        const binaryStr = reader.result
-        console.log(binaryStr)
-      }
-      reader.readAsArrayBuffer(file)
-    })
-    
-  }, [])
-  const {getRootProps, getInputProps} = useDropzone({onDrop})
+const FILE_SIZE = 2**10 //max file size
+const SUPPORTED_FORMATS = [".py", ".java", ".csv", ".c"] //file types allowed
+let nbSubmit = 0
+let nbSubMax = 50
 
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
-    </div>
-  )
-}
+const validationSchema = yup.object({
+    attachment: yup.mixed()
+    .nullable()
+    .notRequired()
 
-export default MyDropzone; 
+
+    .test("FILE_SIZE", "Uploaded file is too big.", 
+        value => !value || (value && value.size <= FILE_SIZE))
+
+    .test("FILE_FORMAT", "Uploaded file has unsupported format.", 
+        value => !value || (value && SUPPORTED_FORMATS.includes(value.type)))        
+        
+    .test("nbSubMax", "Too many attempts were submitted.",  //If there were too many attempts
+        value => !value || (value && nbSubmit <= nbSubMax)),
+
+  });
+  
+
+
+
+
+
+const RegisterForm = async () => { //finish it to make it for files
+  const url = 'http://localhost:3000/uploadFile';
+
+  const formik = useFormik({
+    initialValues: {
+      file: '',
+    },
+
+    validationSchema,
+    onSubmit: async (values) => {
+      //const { file } = values;
+      const response = await axios.post(url, values);
+      console.log(response);          
+    },
+  });
+
+return (
+<form onSubmit={formik.handleSubmit} encType="multipart/form-data"> 
+  <Dropzone onDrop={files => console.log(files)}>
+
+    {({getRootProps, getInputProps}) => (
+      <div className="container">
+          <input {...getInputProps()}  onChange={formik.handleChange}/>
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        </div>
+      )}
+
+  </Dropzone>
+</form>
+
+   );
+     };
+
+export default RegisterForm;      
