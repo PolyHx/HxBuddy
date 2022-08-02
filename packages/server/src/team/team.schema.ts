@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Participant } from 'src/participant/participant.schema';
 
 export type TeamDocument = Team & Document;
 
